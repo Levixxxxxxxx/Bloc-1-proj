@@ -29,14 +29,16 @@ Visualisation via un dashboard interactif
 
  Données utilisées 
 
+```bash
  DataSet: (https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset)
-
+```
+```bash
 events.csv — événements utilisateurs
 
 item_properties_part1.csv, item_properties_part2.csv — propriétés produits
 
 category_tree.csv — hiérarchie des catégories
-
+```
  Analyses réalisées (lecture sans code)
 
 Activité utilisateur dans le temps
@@ -55,9 +57,9 @@ Analyse A/B basée sur un KPI principal
 Si vous souhaitez seulement comprendre les résultats, vous pouvez ignorer cette partie.
 
 1️/ Prérequis
-
+```bash
 Python 3.9+
-
+```
 pip (installé avec Python)
 
 Un terminal (Windows / macOS / Linux)
@@ -132,7 +134,7 @@ ecommerce-analysis/
 │
 ├── notebooks/ # Analyses étape par étape
 ├── rapport/
-├── scripts/             
+├── scripts/ # A/B test          
 ├── app.py     # Dashboard Streamlit
 ├── requirements.txt  # Dépendances
 ├── README.md
