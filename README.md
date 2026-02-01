@@ -63,19 +63,25 @@ Un terminal (Windows / macOS / Linux)
  Aucun environnement complexe imposé
 
 2️/ Cloner le projet
-
+```bash
 git clone https://github.com/votre-repo/ecommerce-analysis.git
 cd ecommerce-analysis
-
+```
 3️/ (Optionnel mais recommandé) Créer un environnement virtuel
 Windows
+```bash
 python -m venv venv
+```
+```bash
 venv\Scripts\activate
-
+```
 macOS / Linux
+```bash
 python3 -m venv venv
+```
+```bash
 source venv/bin/activate
-
+```
 4️/ Installer les dépendances
 
 📦 Dépendances principales
@@ -93,26 +99,29 @@ streamlit
 statsmodels
 
 Installation en une commande
+```bash
 pip install -r requirements.txt
 
+```
 
  Si requirements.txt n’existe pas, utilisez :
-
+```bash
 pip install pandas numpy matplotlib plotly streamlit statsmodels
-
+```
 5️/ Lancer les notebooks (optionnel)
+```bash
 jupyter notebook
-
-
+```
 Puis ouvrir les fichiers dans le dossier notebooks/.
 
 6️/ Lancer le dashboard Streamlit
+```bash
 streamlit run app.py
-
-
+```
  Le dashboard s’ouvre automatiquement dans le navigateur.
 
 📁 Structure du projet
+```bash
 ecommerce-analysis/
 │
 ├── data/
@@ -124,6 +133,8 @@ ecommerce-analysis/
 ├── requirements.txt  # Dépendances
 ├── README.md
 └── .gitignore
+
+```
 
 🧪 A/B Test (résumé)
 
