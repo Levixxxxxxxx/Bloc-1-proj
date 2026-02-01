@@ -1,4 +1,5 @@
-E-commerce Data Analysis & A/B Testing Project
+📊 E-commerce Data Analysis & A/B Testing Project
+
  Présentation
 
 Ce projet analyse des données issues d’un site e-commerce afin de :
@@ -26,7 +27,9 @@ Mise en place d’un A/B test
 
 Visualisation via un dashboard interactif
 
- Données utilisées
+ Données utilisées 
+
+ DataSet: (https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset)
 
 events.csv — événements utilisateurs
 
@@ -125,11 +128,12 @@ streamlit run app.py
 ecommerce-analysis/
 │
 ├── data/
-│   ├── raw/          # Données brutes
-│   └── processed/    # Données nettoyées
+│   ├── # Données brutes  
 │
-├── notebooks/        # Analyses étape par étape
-├── app.py            # Dashboard Streamlit
+├── notebooks/ # Analyses étape par étape
+├── rapport/
+├── scripts/             
+├── app.py     # Dashboard Streamlit
 ├── requirements.txt  # Dépendances
 ├── README.md
 └── .gitignore
