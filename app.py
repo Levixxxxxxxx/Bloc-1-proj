@@ -2,17 +2,18 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import matplotlib.pyplot as plt
 
 
-# -----------------------
+
 # CONFIG
-# -----------------------
+
 st.set_page_config(page_title="Dashboard E-commerce", layout="wide")
 st.title("📊 Dashboard E-commerce")
 
-# -----------------------
+
 # LOAD DATA
-# -----------------------
+
 @st.cache_data
 @st.cache_data
 def load_data():
@@ -50,61 +51,45 @@ with tab_users:
 
     st.divider()
 
-    # -----------------------
+    
     # ACTIVITÉ UTILISATEURS DANS LE TEMPS
-    # -----------------------
-    st.subheader("📈 Activité des utilisateurs dans le temps")
+   
+    import plotly.express as px
 
-    df_time = df.copy()
-    df_time["date"] = df_time["timestamp"].dt.date
-    df_time["month"] = df_time["timestamp"].dt.to_period("M").astype(str)
-    df_time["year"] = df_time["timestamp"].dt.year
+st.header("📈 Activité des utilisateurs dans le temps")
 
-    # 📅 Par jour (DAU)
-    daily_activity = (
-        df_time.groupby("date")["visitorid"]
-        .nunique()
-        .reset_index(name="utilisateurs_actifs")
-    )
+# Conversion timestamp si nécessaire
+df["timestamp"] = pd.to_datetime(df["timestamp_x"], unit="ms")
 
-    fig_day = px.line(
-        daily_activity,
-        x="date",
-        y="utilisateurs_actifs",
-        title="📅 Activité quotidienne des utilisateurs (DAU)"
-    )
-    st.plotly_chart(fig_day, use_container_width=True)
+# Agrégation temporelle (par jour)
+activity = (
+    df
+    .set_index("timestamp")
+    .resample("D")
+    .size()
+    .reset_index(name="events")
+)
 
-    # 📆 Par mois (MAU)
-    monthly_activity = (
-        df_time.groupby("month")["visitorid"]
-        .nunique()
-        .reset_index(name="utilisateurs_actifs")
-    )
+fig = px.line(
+    activity,
+    x="timestamp",
+    y="events",
+    title="Évolution de l’activité utilisateur (événements / jour)",
+    markers=True
+)
 
-    fig_month = px.line(
-        monthly_activity,
-        x="month",
-        y="utilisateurs_actifs",
-        title="📆 Activité mensuelle des utilisateurs (MAU)"
-    )
-    st.plotly_chart(fig_month, use_container_width=True)
+fig.update_layout(
+    xaxis_title="Date",
+    yaxis_title="Nombre d'événements",
+    height=400
+)
 
-    # 📈 Par année (YAU)
-    yearly_activity = (
-        df_time.groupby("year")["visitorid"]
-        .nunique()
-        .reset_index(name="utilisateurs_actifs")
-    )
+st.plotly_chart(fig, use_container_width=True)
 
-    fig_year = px.bar(
-        yearly_activity,
-        x="year",
-        y="utilisateurs_actifs",
-        title="📈 Activité annuelle des utilisateurs (YAU)"
-    )
-    st.plotly_chart(fig_year, use_container_width=True)
-
+freq = st.selectbox(
+    "Granularité temporelle",
+    ["Jour", "Semaine", "Mois"]
+)
 
 
 
@@ -188,13 +173,41 @@ with tab_funnel:
 
     st.plotly_chart(fig, use_container_width=True)
 
-    # Drop-off
-    st.subheader("📉 Drop-off entre les étapes")
+    # Drop-off entre les étapes
 
-    funnel_df["Drop-off (%)"] = (
-        funnel_df["Utilisateurs"]
-        .pct_change()
-        .fillna(0) * -100
-    )
+st.header("🧭 Drop entre les étapes du funnel")
 
-    st.dataframe(funnel_df)
+# Comptage des événements
+event_counts = df["event"].value_counts()
+
+views = event_counts.get("view", 0)
+add_to_cart = event_counts.get("addtocart", 0)
+transactions = event_counts.get("transaction", 0)
+
+funnel_df = pd.DataFrame({
+    "Étape": ["View", "Add to Cart", "Transaction"],
+    "Volume": [views, add_to_cart, transactions]
+})
+
+fig = px.pie(
+    funnel_df,
+    names="Étape",
+    values="Volume",
+    hole=0.45,
+    title="Répartition des étapes du funnel"
+)
+
+fig.update_traces(
+    textinfo="percent+label",
+    pull=[0, 0.05, 0.1]  
+)
+
+fig.update_layout(
+    showlegend=True,
+    height=400,
+    margin=dict(t=60, b=20)
+)
+
+st.plotly_chart(fig, use_container_width=True)
+
+
