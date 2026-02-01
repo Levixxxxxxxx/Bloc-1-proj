@@ -59,6 +59,7 @@ Si vous souhaitez seulement comprendre les résultats, vous pouvez ignorer cette
 1️/ Prérequis
 ```bash
 Python 3.9+
+ou
 Python 3.12.7
 ```
 pip (installé avec Python)
