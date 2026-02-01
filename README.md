@@ -90,7 +90,7 @@ source venv/bin/activate
 4️/ Installer les dépendances
 
 📦 Dépendances principales
-
+```bash
 pandas
 
 numpy
@@ -102,7 +102,7 @@ plotly
 streamlit
 
 statsmodels
-
+```
 Installation en une commande
 ```bash
 pip install -r requirements.txt
